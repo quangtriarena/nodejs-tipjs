@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -16,7 +17,15 @@ app.use(compression());
 // morgan("tiny");
 //#endregion
 
-// init db
+// ----------------------------------------------------------
+
+//#region [init db]
+require("./dbs/init");
+const { checkConnect, checkOverloadConnections } = require("./helpers/checkConnect");
+checkOverloadConnections();
+//#endregion
+
+// ----------------------------------------------------------
 
 //#region [init router]
 app.use("/", (req, res, next) => {
@@ -25,6 +34,8 @@ app.use("/", (req, res, next) => {
 	});
 });
 //#endregion
+
+// ----------------------------------------------------------
 
 // handle error
 module.exports = app;
