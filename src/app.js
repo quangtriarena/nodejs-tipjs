@@ -21,6 +21,7 @@ app.use(compression());
 
 //#region [init db]
 require("./dbs/init");
+
 const { checkConnect, checkOverloadConnections } = require("./helpers/checkConnect");
 checkOverloadConnections();
 //#endregion
@@ -28,11 +29,7 @@ checkOverloadConnections();
 // ----------------------------------------------------------
 
 //#region [init router]
-app.use("/", (req, res, next) => {
-	return res.status(200).json({
-		message: "hello",
-	});
-});
+app.use("/", require("./routes/index"));
 //#endregion
 
 // ----------------------------------------------------------
